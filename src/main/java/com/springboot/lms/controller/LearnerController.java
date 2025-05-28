@@ -3,6 +3,9 @@ package com.springboot.lms.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,8 +33,9 @@ public class LearnerController {
 		return learnerService.getAll();
 	}
 	@DeleteMapping("/api/learner/delete/{id}")
-	public void deleteById(@PathVariable int id) {
+	public ResponseEntity<?> deleteById(@PathVariable int id) {
 		learnerService.deletebyId(id);
+		return ResponseEntity.status(HttpStatus.OK).body("Deleted Learner");
 	}
 	@GetMapping("/api/learner/get/{id}")
 	public Learner getById(@PathVariable int id) {

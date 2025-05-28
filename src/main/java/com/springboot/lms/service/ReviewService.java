@@ -1,5 +1,7 @@
 package com.springboot.lms.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.springboot.lms.model.LearnerCourse;
@@ -31,5 +33,9 @@ public class ReviewService {
 		review.setLearnerCourse(learnerCourse);
 
 		return reviewRepository.save(review);
+	}
+
+	public List<Review> getReviews(String value) {
+		return reviewRepository.findByRatingGreaterThanEqual(value);
 	}
 }

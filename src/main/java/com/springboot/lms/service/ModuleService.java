@@ -27,7 +27,7 @@ public class ModuleService {
 	}
 	public List<CModule> getModuleByCourseId(int courseId) {
 		Course course=courseRepository.findById(courseId).orElseThrow(()->new RuntimeException("Id not found"));
-		return null;
+		return moduleRepository.getModuleByCourseId(courseId);
 	}
 
 
