@@ -26,6 +26,7 @@ public class SecurityConfig {
 					.requestMatchers("/api/user/signup").permitAll()
 					.requestMatchers("/api/learner/add").permitAll()
 					.requestMatchers("/api/author/add").permitAll()
+					.requestMatchers("/api/course/getAll").permitAll()
 					.requestMatchers("/api/learner/get-one").hasAuthority("LEARNER")
 					.requestMatchers("/api/course/add").hasAnyAuthority("AUTHOR","EXECUTIVE")
 					.anyRequest().authenticated()  

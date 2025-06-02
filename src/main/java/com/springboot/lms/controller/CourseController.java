@@ -1,13 +1,14 @@
 package com.springboot.lms.controller;
 
+import java.security.Principal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.springboot.lms.model.Course;
@@ -19,12 +20,14 @@ public class CourseController {
 	@Autowired
 	private CourseService courseService;
 	@PostMapping("/add")
-	public Course addCourse(@RequestBody Course course) {
-		return courseService.addCourse(course);
+	public Course addCourse(Principal principal, @RequestBody Course course) {
+		String username = principal.getName();
+		return courseService.addCourse(course,username);
 	}
 	@GetMapping("/getAll")
-	public List<Course> getAll() {
-		return courseService.getAll();
+	public List<Course> getAll(@RequestParam(name = "page",defaultValue = "0",required = false) Integer page,
+			@RequestParam(name = "size",defaultValue = "1000",required = false) Integer size) {
+		return courseService.getAll(page,size);
 	}
 	
 }
