@@ -3,6 +3,8 @@ package com.springboot.lms.controller;
 import java.security.Principal;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +23,7 @@ import com.springboot.lms.service.LearnerService;
 public class LearnerController {
 	@Autowired
 	private LearnerService learnerService;
+	 private Logger logger = LoggerFactory.getLogger("LearnerController");
 
 	@PostMapping("/api/learner/add")
 	public Learner insertLearner(@RequestBody Learner learner) {
@@ -51,6 +54,7 @@ public class LearnerController {
 
 	@PutMapping("/api/learner/update/{id}")
 	public Learner updateLearner(@PathVariable int id, @RequestBody Learner learner) {
+		 logger.info("ID given is : " + id);
 		return learnerService.updateLearner(id, learner);
 	}
 

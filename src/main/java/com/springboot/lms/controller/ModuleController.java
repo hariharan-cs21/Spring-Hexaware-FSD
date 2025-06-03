@@ -20,7 +20,7 @@ public class ModuleController {
 	@Autowired
 	private ModuleService moduleService;
 	@PostMapping("/addModule/{id}")
-	public CModule addCourse(@PathVariable int id,@RequestBody CModule cModule) {
+	public CModule addModule(@PathVariable int id,@RequestBody CModule cModule) {
 		return moduleService.addModule(id,cModule);
 	}
 	@GetMapping("/{courseId}")
