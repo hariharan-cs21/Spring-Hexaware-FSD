@@ -27,7 +27,7 @@ public class LearnerCourseController {
 		return learnerCourseService.enrollLearnerInCourse(learnerId,courseId,learnerCourse);
 	}
 	@GetMapping("/api/learner/enroll/course/{courseId}")
-	public List<Learner> getLearnerByCourseId(@PathVariable int courseId) {
+	public List<?> getLearnerByCourseId(@PathVariable int courseId) {
 		return learnerCourseService.getLearnerByCourseId(courseId);
 	}
 	@GetMapping("/api/learner/enroll/{learnerId}")

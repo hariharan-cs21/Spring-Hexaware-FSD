@@ -3,8 +3,10 @@ package com.springboot.lms.service;
 import java.time.LocalDate;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.springboot.lms.dto.LearnerDto;
 import com.springboot.lms.model.Course;
 import com.springboot.lms.model.Learner;
 import com.springboot.lms.model.LearnerCourse;
@@ -19,7 +21,9 @@ public class LearnerCourseService {
 	private CourseRepository courseRepository;
 	private LearnerRepository learnerRepository;
 	private LearnerCourseRepository learnerCourseRepository;
-
+	@Autowired
+	private LearnerDto learnerDto;
+	
 	public LearnerCourseService(CourseRepository courseRepository, LearnerRepository learnerRepository,
 			LearnerCourseRepository learnerCourseRepository) {
 		super();
@@ -42,11 +46,18 @@ public class LearnerCourseService {
 		
 		return learnerCourseRepository.save(learnerCourse);
 	}
-	public List<Learner>getLearnerByCourseId(int courseId) {
-		 return learnerCourseRepository.getLearnerByCourseId(courseId);
+	public List<LearnerDto> getLearnerByCourseId(int courseId) {
+		List<Learner> list = learnerCourseRepository.getLearnerByCourseId(courseId);
+		 return learnerDto.convertLeanerIntoDto(list);
 	}
 	public List<Course>getCourseByLearnerId(int learnerID) {
-		 return learnerCourseRepository.getCourseByLearnerId(learnerID);
+		learnerRepository.findById(learnerID).orElseThrow(()->new RuntimeException("Learner Id invalid"));
+		 List<Course>list= learnerCourseRepository.getCourseByLearnerId(learnerID);
+		 if(list!=null && list.isEmpty()) {
+			 throw new RuntimeException("You are not enrolled in any course");
+		 }
+		 return list;
+		 
 	}
 	
 	

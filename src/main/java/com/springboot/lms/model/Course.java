@@ -1,5 +1,7 @@
 package com.springboot.lms.model;
 
+import java.util.Objects;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -11,6 +13,7 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name="course")
 public class Course {
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
@@ -43,5 +46,20 @@ public class Course {
 	}
 	public void setCredits(int credits) {
 		this.credits = credits;
+	}
+	@Override
+	public int hashCode() {
+		return Objects.hash(credits, id, title);
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Course other = (Course) obj;
+		return credits == other.credits && id == other.id && Objects.equals(title, other.title);
 	}
 }
