@@ -20,9 +20,17 @@ public class Course {
 	@Column(nullable = false)
 	private String title;
 	private int credits;
+	private String imageUrl;
 	
 	@ManyToOne
 	private Author author;
+	
+	public String getImageUrl() {
+		return imageUrl;
+	}
+	public void setImageUrl(String imageUrl) {
+		this.imageUrl = imageUrl;
+	}
 	public Author getAuthor() {
 		return author;
 	}

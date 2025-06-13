@@ -29,5 +29,8 @@ public class CourseService {
         Pageable pageable = PageRequest.of(page, size);
 		return courseRepository.findAll(pageable).getContent();
 	}
+	public List<Course> getCoursesByAuthor(String username) {
+		return courseRepository.getCourseByAuthor(username);
+	}
 	
 }
