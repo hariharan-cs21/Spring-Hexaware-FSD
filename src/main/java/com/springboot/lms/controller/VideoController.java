@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,13 +18,19 @@ import com.springboot.lms.service.VideoService;
 
 @RestController
 @RequestMapping("/api/video")
+@CrossOrigin(origins = "http://localhost:5173")
 public class VideoController {
 	@Autowired
-    private VideoService videoService;
-	
+	private VideoService videoService;
+
 	@PostMapping("/add/{moduleId}")
-	public ResponseEntity<?>addAll(@PathVariable int moduleId,@RequestBody List<Video>list){
-		videoService.addAll(moduleId,list);
+	public ResponseEntity<?> addAll(@PathVariable int moduleId, @RequestBody List<Video> list) {
+		videoService.addAll(moduleId, list);
 		return ResponseEntity.status(HttpStatus.OK).body("Videos added successfully");
+	}
+
+	@GetMapping("/getAll/{courseId}")
+	public List<Video> getAllVideosWithModules(@PathVariable int courseId) {
+		return videoService.getAllVideosWithModules(courseId);
 	}
 }

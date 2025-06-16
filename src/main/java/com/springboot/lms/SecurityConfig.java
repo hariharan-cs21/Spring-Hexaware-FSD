@@ -1,4 +1,4 @@
-	package com.springboot.lms;
+package com.springboot.lms;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -14,43 +14,43 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-@Configuration 
+@Configuration
 public class SecurityConfig {
 	@Autowired
 	private JwtFilter jwtFilter;
-	
-	
+
 	@Bean
 	SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		http
-			.csrf((csrf) -> csrf.disable()) 
-			.authorizeHttpRequests(authorize -> authorize
-					.requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-					.requestMatchers("/api/user/signup").permitAll()
-					.requestMatchers("/api/learner/add").permitAll()
-					.requestMatchers("/api/user/token").authenticated()
-					.requestMatchers("/api/course/by-author").hasAuthority("AUTHOR")
-					.requestMatchers("/api/author/add").permitAll()
-					.requestMatchers("/api/course/getAll").permitAll()
-					.requestMatchers("/api/learner/update/{id}").hasAuthority("LEARNER")
-					.requestMatchers("/api/learner/get-one").hasAuthority("LEARNER")
-					.requestMatchers("/api/course/add").hasAnyAuthority("AUTHOR","EXECUTIVE")
-					.requestMatchers("/api/video/add/{moduleId}").hasAuthority("AUTHOR")
-					.anyRequest().authenticated()  
-			)
-			 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class) 
-		 .httpBasic(Customizer.withDefaults()); 
+				.csrf((csrf) -> csrf.disable())
+				.authorizeHttpRequests(authorize -> authorize
+						.requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+						.requestMatchers("/api/user/signup").permitAll()
+						.requestMatchers("/api/learner/add").permitAll()
+						.requestMatchers("/api/user/token").authenticated()
+						.requestMatchers("/api/course/by-author").hasAuthority("AUTHOR")
+						.requestMatchers("/api/author/add").permitAll()
+						.requestMatchers("/api/course/getAll").permitAll()
+						.requestMatchers("/api/module/{courseId}").authenticated()
+						.requestMatchers("/api/learner/update/{id}").hasAuthority("LEARNER")
+						.requestMatchers("/api/learner/get-one").hasAuthority("LEARNER")
+						.requestMatchers("/api/course/add").hasAnyAuthority("AUTHOR", "EXECUTIVE")
+						.requestMatchers("/api/video/add/{moduleId}").hasAuthority("AUTHOR")
+						.requestMatchers("/api/video/getAll/{courseId}").permitAll()
+						.anyRequest().authenticated())
+				.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
+				.httpBasic(Customizer.withDefaults());
 		return http.build();
 	}
-	
+
 	@Bean
-	PasswordEncoder passwordEncoder() {  
+	PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
-	
+
 	@Bean
-	AuthenticationManager getAuthManager(AuthenticationConfiguration auth) 
+	AuthenticationManager getAuthManager(AuthenticationConfiguration auth)
 			throws Exception {
-		  return auth.getAuthenticationManager();
-	 }
+		return auth.getAuthenticationManager();
+	}
 }

@@ -30,4 +30,8 @@ public class VideoService {
 		return videoRepository.saveAll(videos);
 	}
 
+	public List<Video> getAllVideosWithModules(int courseId) {
+		return videoRepository.getAllVideosWithModules(courseId);
+	}
+
 }
