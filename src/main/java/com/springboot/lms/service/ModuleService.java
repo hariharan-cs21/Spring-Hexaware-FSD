@@ -16,19 +16,19 @@ public class ModuleService {
 
 	public ModuleService(ModuleRepository moduleRepository, CourseRepository courseRepository) {
 		this.moduleRepository = moduleRepository;
-		this.courseRepository=courseRepository;
-	}
-	
-	public CModule addModule(int id, CModule cModule) {
-		Course course=courseRepository.findById(id).orElseThrow(()->new RuntimeException("Id not found"));
-		cModule.setCourse(course);
-		return moduleRepository.save(cModule);
-		
-	}
-	public List<CModule> getModuleByCourseId(int courseId) {
-		Course course=courseRepository.findById(courseId).orElseThrow(()->new RuntimeException("Id not found"));
-		return moduleRepository.getModuleByCourseId(courseId);
+		this.courseRepository = courseRepository;
 	}
 
+	public CModule addModule(int id, CModule cModule) {
+		Course course = courseRepository.findById(id).orElseThrow(() -> new RuntimeException("Id not found"));
+		cModule.setCourse(course);
+		return moduleRepository.save(cModule);
+
+	}
+
+	public List<CModule> getModuleByCourseId(int courseId) {
+		courseRepository.findById(courseId).orElseThrow(() -> new RuntimeException("Id not found"));
+		return moduleRepository.getModuleByCourseId(courseId);
+	}
 
 }

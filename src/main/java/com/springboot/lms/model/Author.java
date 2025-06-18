@@ -18,6 +18,7 @@ public class Author {
 	private String name;
 	private boolean isActive = true;
 	private String contact;
+	private String profilePic;
 	@OneToOne
 	private User user;
 
@@ -59,5 +60,13 @@ public class Author {
 
 	public void setActive(boolean isActive) {
 		this.isActive = isActive;
+	}
+
+	public String getProfilePic() {
+		return profilePic;
+	}
+
+	public void setProfilePic(String profilePic) {
+		this.profilePic = profilePic;
 	}
 }
